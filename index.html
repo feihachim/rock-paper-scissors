@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rock Paper Scissors</title>
+</head>
+<body>
+    <script>
+        'use strict';
+
+        function computerPlay(){
+            let choice=['Rock','Paper','Scissors'];
+            let computerChoice=Math.floor(Math.random()*3);
+            return choice[computerChoice];
+        }
+
+        function capitalize(word){
+            let result = word.charAt(0).toUpperCase()+word.substr(1,).toLowerCase();
+            return result;
+            
+        }
+        
+        function playRound(playerSelection,computerSelection){
+            let playerChoice = capitalize(playerSelection);
+            let computerChoice = capitalize(computerSelection);
+            let message;
+            if((playerChoice == 'Rock' && computerChoice == 'Scissors') 
+            || (playerChoice == 'Scissors' && computerChoice == 'Paper') 
+            || (playerChoice == 'Paper' && computerChoice == 'Rock')){
+                message = 'You Win! '+ playerChoice + " beats " + computerChoice;
+            }
+            else if((playerChoice == 'Rock' && computerChoice == 'Paper') 
+            || (playerChoice == 'Scissors' && computerChoice == 'Rock') 
+            || (playerChoice == 'Paper' && computerChoice == 'Scissors')){
+                message = 'You Lose! '+ playerChoice + " beats " + computerChoice;
+            }
+            else{
+                message = 'Draw!';
+            }
+            return message;
+        }
+
+        function game(){
+            let roundNumber=5;
+            let victoryPlayer=0;
+            let victoryComputer=0;
+            let playerSelection;
+            let computerSelection;
+            let roundResult;
+            let gameResult;
+            for(let i=1;i<=roundNumber;i++){
+                playerSelection=prompt("What is your choice between rock, paper, scissors?");
+                computerSelection=computerPlay();
+                roundResult=playRound(playerSelection,computerSelection);
+                console.log(roundResult);
+                if(roundResult.includes('Win!')){
+                    victoryPlayer++;
+                }
+                if(roundResult.includes('Lose!')){
+                    victoryComputer++;
+                }
+            }
+            if(victoryPlayer>victoryComputer){
+                gameResult="You win the game!"
+            }
+            else if(victoryPlayer<victoryComputer){
+                gameResult='You lost the game!'
+            }
+            else{
+                gameResult='No winner nor loser!'
+            }
+            console.log(gameResult);
+        }
+
+        game();
+    </script>
+</body>
+</html>
