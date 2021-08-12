@@ -45,6 +45,44 @@
             return message;
         }
 
+        function evaluateGame(playerScore, computerScore) {
+            let gameResult;
+            if (playerScore == 5) {
+                gameResult = 'You win the game!!!';
+            }
+            else if (computerScore == 5) {
+                gameResult = 'You lose the game!!!';
+            }
+            else {
+                gameResult = '';
+            }
+            return gameResult;
+        }
+
+        function game(buttons, playerScore, computerScore, roundScore, gameScore, victoryPlayer, victoryComputer) {
+            buttons.forEach(element => element.addEventListener('click', function (e) {
+                let playerChoice = e.target.innerHTML;
+                let computerChoice = computerPlay();
+                let roundResult;
+                let gameResult;
+                roundResult = playRound(playerChoice, computerChoice);
+                roundScore.innerHTML = roundResult;
+                if (roundResult.includes('Win!')) {
+                    victoryPlayer++;
+                    playerScore.innerHTML = victoryPlayer;
+                }
+                if (roundResult.includes('Lose!')) {
+                    victoryComputer++;
+                    computerScore.innerHTML = victoryComputer;
+                }
+                gameResult = evaluateGame(victoryPlayer, victoryComputer);
+                if (gameResult) {
+                    gameScore.innerHTML = gameResult;
+                    buttons.forEach(element => element.disabled = true);
+                }
+            }, false));
+        }
+
         let buttons = document.querySelectorAll('button');
         let playerScore = document.querySelector('#playerScore');
         let computerScore = document.querySelector('#computerScore');
@@ -53,33 +91,8 @@
 
         let victoryPlayer = 0;
         let victoryComputer = 0;
-        let roundResult;
-        let gameResult;
-        buttons.forEach(element => element.addEventListener('click', function (e) {
-            let playerChoice = e.target.innerHTML;
-            let computerChoice = computerPlay();
-            roundResult = playRound(playerChoice, computerChoice);
-            roundScore.innerHTML = roundResult;
-            if (roundResult.includes('Win!')) {
-                victoryPlayer++;
-                playerScore.innerHTML = victoryPlayer;
-            }
-            if (roundResult.includes('Lose!')) {
-                victoryComputer++;
-                computerScore.innerHTML = victoryComputer;
-            }
-            if (victoryPlayer == 5) {
-                gameResult = 'You win the game!';
-            }
-            if (victoryComputer == 5) {
-                gameResult = 'You lose the game!';
-            }
-            if (gameResult) {
-                gameScore.innerHTML = gameResult;
-                buttons.forEach(element => element.disabled = true);
-            }
 
-        }, false));
+        game(buttons, playerScore, computerScore, roundScore, gameScore, victoryPlayer, victoryComputer);
 
     </script>
 </body>
